@@ -1,0 +1,229 @@
+Perfect — let’s break it down clearly and precisely so you (or a dev on Replit) know exactly what needs to be built to launch the full LIV8.co site.
+
+Below is a technical and functional build specification for the full website, including popups, light/dark mode, modular pages, and conversion elements.
+
+⸻
+
+✅ LIV8 Website Build Spec for Replit
+
+📍 Main Tech Stack:
+	•	Frontend: HTML5 + TailwindCSS 3.0
+	•	JS Framework: Vanilla JS (or Alpine.js for simplicity)
+	•	Theme Switcher: TailwindCSS + LocalStorage toggle for Light/Dark
+	•	Forms: Embedded links or Formspree/Formcarry/Tally.so
+	•	Popups/Modals: Vanilla JS or Alpine.js
+	•	Hosting: Replit (Free), Netlify, or Vercel (optional for prod)
+
+⸻
+
+🗂️ FILE & FOLDER STRUCTURE
+
+/liv8
+├── index.html                  # Homepage
+├── services.html               # Service overview
+├── divisions.html              # Brand/subsidiary breakdown
+├── join.html                   # Consultant/affiliate onboarding
+├── contact.html                # Contact & support
+├── book.html                   # Calendly or booking system
+├── /assets                     # All images, logos, icons
+│   ├── /logos
+│   └── /illustrations
+├── /css
+│   └── style.css               # Tailwind base config & custom styles
+├── /js
+│   └── main.js                 # Light/dark toggle, modals, popups
+└── README.md
+
+
+⸻
+
+🔧 COMPONENTS TO BUILD
+
+1. 🔝 Top Nav (Global)
+	•	Sticky header
+	•	Logo + Nav links:
+	•	Home
+	•	Who We Help
+	•	Services ▼
+	•	Divisions ▼
+	•	Join LIV8
+	•	Book a Call
+	•	Contact
+	•	Light/Dark mode toggle (☀️🌙 button)
+	•	Mobile menu: slide-down menu on small screens
+
+⸻
+
+2. 🏠 Homepage (index.html)
+
+Hero Section
+	•	Headline: “Elevate Your Life, Wealth, Health & Business.”
+	•	Subtext: “Consulting. Funding. Health. Solar. AI. All in One Ecosystem.”
+	•	CTA Buttons:
+	•	[Explore Services]
+	•	[Book a Free Consultation]
+
+Icons Grid – “Who We Help”
+	•	Entrepreneurs, Homeowners, Businesses, Self-employed, etc.
+
+Featured Service Cards (6)
+
+Each card links to section/page:
+	•	Digital & AI
+	•	Funding & Credit
+	•	Insurance & Wealth
+	•	Health & Supplements
+	•	Solar & Energy
+	•	Events/Logistics
+
+Our Brands Carousel
+	•	LIV8 AI, LIV8 Health, LIV8 Capital, etc.
+	•	Logos + “Explore” button
+
+Consultant/Affiliate Banner
+	•	Headline: “Join LIV8. Earn Across Every Industry We Touch.”
+	•	Button: [Learn More]
+
+Partner Logos
+	•	Taskmagic, Powur, Reach Solar, Bettr, etc.
+
+Testimonials/Stats
+	•	Slider with 3–5 client testimonials (optional)
+	•	Stats section (animated counters): e.g. 500+ clients, $10M+ funded, etc.
+
+Footer
+	•	Nav Links
+	•	Call Center: 813-441-9686
+	•	Social Icons
+	•	Terms / Privacy / Sitemap
+
+⸻
+
+3. 🌐 Services Page (services.html)
+	•	Clean grid layout
+	•	8 core services, each with:
+	•	Icon or image
+	•	Headline
+	•	Short description
+	•	“Learn More” link or embedded form
+
+⸻
+
+4. 🏢 Divisions Page (divisions.html)
+	•	Grid layout of all LIV8 brands:
+	•	LIV8 AI
+	•	LIV8 Capital
+	•	LIV8 Life
+	•	LIV8 Health
+	•	LIV8 Homes
+	•	LIV8 Financial
+	•	LIV8 Entertainment
+	•	LIV8 Transport
+	•	Each with logo, short description, and CTA button:
+	•	“Visit Site” or “Explore”
+
+⸻
+
+5. 🤝 Join Page (join.html)
+	•	Overview of how to become a Consultant or Affiliate
+	•	Commission Structure Table
+	•	Advancement Plan Breakdown
+	•	Bonus Plan (Performance Pool, Overrides, etc.)
+	•	CTA: [Apply Now] (link to embedded form)
+
+⸻
+
+6. 📅 Booking Page (book.html)
+	•	Embedded Calendly or form for booking
+	•	Dropdown for selecting:
+	•	Funding Help
+	•	Solar Consultation
+	•	Insurance Quote
+	•	AI/Digital Services
+	•	Health Plan
+
+⸻
+
+7. 📬 Contact Page (contact.html)
+	•	Contact form (Formspree or Tally.so)
+	•	Phone tree info:
+	•	Press 1 for Sales
+	•	Press 2 for Support
+	•	Press 3 for ??? (user-defined)
+	•	Google Map Embed (optional)
+
+⸻
+
+8. 🔥 Popups & Modals
+
+✅ Exit-Intent Popup (on homepage + services)
+	•	Triggers only when mouse leaves window
+	•	Delay: 1s
+	•	Content:
+	•	“Wait! Before You Go… Grab a Free Call with a LIV8 Advisor.”
+	•	CTA Button: [Book Free Call] → /book.html
+	•	Option to Dismiss (remembers in localStorage for 7 days)
+
+✅ Timed Modal (10s after homepage load)
+	•	“Looking to Earn? LIV8 is Hiring Consultants.”
+	•	Button: [Learn More] → /join.html
+
+✅ Scroll Triggered Modal (after 75% scroll)
+	•	“Join Our Movement – Sign Up for Our Newsletter”
+	•	Optional newsletter field (Mailchimp / Brevo / Revue)
+
+⸻
+
+🌗 Light / Dark Theme
+	•	Add Tailwind dark mode via class-based toggle
+	•	Add button in navbar (🌙/☀️ icon toggle)
+	•	Save preference in localStorage
+	•	Ensure all text/icons look great in both modes
+
+⸻
+
+🧠 Scripts / Interactions
+	•	main.js will handle:
+	•	Theme switching
+	•	Exit intent detection
+	•	Modal trigger control (show once per session)
+	•	Mobile menu toggle
+
+⸻
+
+📈 Optional Enhancements (Phase 2)
+	•	Live chat bubble (Crisp, Intercom, or Tidio)
+	•	Google Analytics or Facebook Pixel
+	•	Blog (/blog.html or Markdown-driven)
+	•	Testimonials slider (Splide.js or Swiper.js)
+
+⸻
+
+✅ What Replit Should Do
+	1.	Set up TailwindCSS + HTML project
+	2.	Create all 7 pages listed
+	3.	Add reusable navbar and footer across all pages
+	4.	Create working light/dark toggle using Tailwind + JS
+	5.	Add modal popups using Alpine.js or vanilla JS
+	6.	Ensure all pages are responsive (mobile + desktop)
+	7.	Use localStorage to manage theme and popup dismissals
+	8.	Embed all forms (Calendly, Sqr.co, Formspree, etc.)
+	9.	Deploy live (Replit share link or custom domain)
+
+⸻
+
+🚀 When You’re Ready:
+
+Once you upload:
+	•	Logos (SVG or PNG)
+	•	Brand colors
+	•	Booking links or embed codes
+	•	Form services (Formspree, Tally, or external links)
+
+I can deliver:
+	•	Full Replit-ready ZIP or GitHub repo
+	•	Light/Dark ready with all pages and modals built-in
+
+⸻
+
+Would you like me to begin generating the index.html and style.css boilerplate so you can paste directly into Replit and start building from there?
