@@ -29,19 +29,43 @@ export default function JoinModal({ isOpen, onClose }: JoinModalProps) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement actual form submission
-    alert('Thank you for your interest! We will review your application and get back to you.');
-    onClose();
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      experience: '',
-      message: ''
-    });
+    
+    try {
+      const response = await fetch('/api/join', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          phone: formData.phone,
+          experience: formData.experience,
+          interest: 'Consultant Position',
+          background: formData.message
+        }),
+      });
+      
+      if (response.ok) {
+        alert('Thank you for your interest! We will review your application and get back to you.');
+        onClose();
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          experience: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Failed to submit form');
+      }
+    } catch (error) {
+      console.error('Error submitting join application:', error);
+      alert('There was an error submitting your application. Please try again.');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

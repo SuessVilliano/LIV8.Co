@@ -187,7 +187,6 @@ export const TESTIMONIALS = [
 
 export const PARTNERS = [
   { name: 'TaskMagic', category: 'Automation' },
-  { name: 'Powur', category: 'Solar Energy' },
   { name: 'Reach Solar', category: 'Solar Solutions' },
   { name: 'Bettr', category: 'Health & Wellness' }
 ];

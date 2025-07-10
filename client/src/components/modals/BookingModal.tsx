@@ -29,19 +29,45 @@ export default function BookingModal({ isOpen, onClose }: BookingModalProps) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement actual form submission
-    alert('Thank you! We will contact you soon to schedule your consultation.');
-    onClose();
-    setFormData({
-      service: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      message: ''
-    });
+    
+    try {
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          phone: formData.phone,
+          company: '',
+          service: formData.service,
+          date: new Date().toISOString().split('T')[0],
+          time: 'TBD',
+          message: formData.message
+        }),
+      });
+      
+      if (response.ok) {
+        alert('Thank you! We will contact you soon to schedule your consultation.');
+        onClose();
+        setFormData({
+          service: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Failed to submit form');
+      }
+    } catch (error) {
+      console.error('Error submitting booking:', error);
+      alert('There was an error submitting your booking. Please try again.');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {

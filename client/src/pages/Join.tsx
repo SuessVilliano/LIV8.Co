@@ -104,12 +104,22 @@ export default function Join({ onJoinClick }: JoinProps) {
         <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 text-white text-center">
           <h3 className="text-3xl font-bold mb-4">Ready to Start Earning?</h3>
           <p className="text-xl mb-8">Join our team of successful consultants and start building your income today</p>
-          <button 
-            onClick={onJoinClick}
-            className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-lg font-medium text-lg transition-colors"
-          >
-            Apply Now
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button 
+              onClick={onJoinClick}
+              className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-lg font-medium text-lg transition-colors"
+            >
+              Apply Now
+            </button>
+            <a 
+              href="https://liv8.pushlapgrowth.com/login" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white/10 border border-white text-white hover:bg-white/20 px-8 py-3 rounded-lg font-medium text-lg transition-colors"
+            >
+              Affiliate Login
+            </a>
+          </div>
         </div>
       </div>
     </div>

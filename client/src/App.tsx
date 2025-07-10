@@ -10,6 +10,8 @@ import Divisions from "@/pages/Divisions";
 import Join from "@/pages/Join";
 import Book from "@/pages/Book";
 import Contact from "@/pages/Contact";
+import FundingCredits from "@/pages/FundingCredits";
+import EventsLogistics from "@/pages/EventsLogistics";
 import NotFound from "@/pages/not-found";
 import { useModals } from "@/hooks/useModals";
 
@@ -24,6 +26,8 @@ function Router() {
       <Route path="/join" component={() => <Join onJoinClick={() => setJoinModal(true)} />} />
       <Route path="/book" component={Book} />
       <Route path="/contact" component={Contact} />
+      <Route path="/funding-credits" component={() => <FundingCredits onBookingClick={() => setBookingModal(true)} />} />
+      <Route path="/events-logistics" component={() => <EventsLogistics onBookingClick={() => setBookingModal(true)} />} />
       <Route component={NotFound} />
     </Switch>
   );

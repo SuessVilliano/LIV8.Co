@@ -33,7 +33,23 @@ export default function ServicesSection({ onBookingClick }: ServicesSectionProps
                 className="rounded-lg mb-6 w-full h-32 object-cover"
               />
               <button 
-                onClick={onBookingClick}
+                onClick={() => {
+                  if (service.id === 'digital-ai') {
+                    window.open('https://liv8ai.com', '_blank');
+                  } else if (service.id === 'funding') {
+                    window.location.href = '/funding-credits';
+                  } else if (service.id === 'insurance') {
+                    window.open('https://smartlifebrokers.com', '_blank');
+                  } else if (service.id === 'health') {
+                    window.open('https://liv8health.com', '_blank');
+                  } else if (service.id === 'solar') {
+                    window.open('https://liv8solar.com', '_blank');
+                  } else if (service.id === 'events') {
+                    window.location.href = '/events-logistics';
+                  } else {
+                    onBookingClick();
+                  }
+                }}
                 className={`w-full ${service.id === 'digital-ai' ? 'bg-primary hover:bg-blue-700' : 
                   service.id === 'funding' ? 'bg-secondary hover:bg-green-700' : 
                   service.id === 'insurance' ? 'bg-purple-600 hover:bg-purple-700' : 
@@ -41,7 +57,7 @@ export default function ServicesSection({ onBookingClick }: ServicesSectionProps
                   service.id === 'solar' ? 'bg-yellow-600 hover:bg-yellow-700' : 
                   'bg-indigo-600 hover:bg-indigo-700'} text-white py-3 rounded-lg font-medium transition-colors`}
               >
-                Learn More
+                {service.id === 'digital-ai' || service.id === 'health' || service.id === 'solar' || service.id === 'insurance' ? 'Visit Site' : 'Learn More'}
               </button>
             </div>
           ))}

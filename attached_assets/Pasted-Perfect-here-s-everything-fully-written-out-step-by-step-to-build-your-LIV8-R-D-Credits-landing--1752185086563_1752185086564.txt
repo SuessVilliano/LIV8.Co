@@ -1,0 +1,220 @@
+Perfect — here’s everything fully written out, step-by-step, to build your LIV8 R&D Credits landing page in Replit under your existing website liv8.co.
+
+⸻
+
+✅ GOAL
+
+You’re adding a “Funding & Credits” page to your LIV8 website, and under that, a section for R&D Tax Credits that links to a dedicated landing page. This page will explain the refund opportunity and collect leads through a form.
+
+⸻
+
+📍FINAL URL STRUCTURE
+
+https://liv8.co/funding-credits/rnd/index.html
+
+
+⸻
+
+🛠️ HOW TO BUILD THIS IN REPLIT
+
+STEP 1: Create the Directory Structure
+
+In your Replit project:
+	1.	Inside your public folder (or wherever you serve frontend files), create a new folder:
+
+/funding-credits/
+
+
+	2.	Inside funding-credits/, create another folder:
+
+/rnd/
+
+
+	3.	You will place 3 files inside the /rnd/ folder:
+
+index.html
+style.css
+script.js
+
+
+
+⸻
+
+🧾 STEP 2: Add the index.html Page
+
+Paste this entire code into a new file called index.html inside the /funding-credits/rnd/ folder:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LIV8 | R&D Tax Refunds</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="/logo.png" alt="LIV8 Logo" class="logo">
+    <h1>Claim Your R&D Tax Refund</h1>
+    <p>Immediate cash back for innovation you’ve already invested in.</p>
+  </header>
+
+  <section class="highlight">
+    <h2>New Law = Big Refunds</h2>
+    <ul>
+      <li>✅ Full expensing of 2022–2024 R&D costs</li>
+      <li>💸 Cash refunds in as little as 60–90 days</li>
+      <li>📆 One-year window to amend past returns</li>
+    </ul>
+  </section>
+
+  <section class="form-section">
+    <h2>Get Your Refund Estimate</h2>
+    <form id="leadForm">
+      <input name="company" placeholder="Company Name" required>
+      <input name="industry" placeholder="Industry" required>
+      <input name="revenue" type="number" placeholder="Annual Revenue" required>
+      <input name="rd_spend" type="number" placeholder="Total R&D Spend (2022–2024)" required>
+      <input name="name" placeholder="Your Name" required>
+      <input name="email" type="email" placeholder="Your Email" required>
+      <input name="phone" placeholder="Your Phone Number" required>
+      
+      <label>Upload Tax Returns (2022–2024):
+        <input name="tax_returns" type="file" multiple required>
+      </label>
+
+      <label>Upload R&D Spend Docs:
+        <input name="spend_docs" type="file" multiple required>
+      </label>
+
+      <label>
+        <input name="authorize" type="checkbox" required>
+        I authorize LIV8 to contact my CPA and review tax filings.
+      </label>
+
+      <button type="submit">Show Me My Refund</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 LIV8 Digital – R&D Credit Division</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+⸻
+
+🎨 STEP 3: Add the style.css File
+
+Create another file called style.css in the same /rnd/ folder and paste this code:
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  color: #333;
+}
+header {
+  background-color: #3c3c3c;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+.logo {
+  width: 100px;
+  margin-bottom: 1rem;
+}
+.highlight {
+  background: white;
+  padding: 2rem;
+  text-align: center;
+}
+.highlight ul {
+  list-style-type: none;
+  padding: 0;
+}
+.highlight li {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+.form-section {
+  background: #e0f7ff;
+  padding: 2rem;
+}
+form {
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="file"] {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+button {
+  background: #3c3c3c;
+  color: white;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+footer {
+  background: #3c3c3c;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+
+⸻
+
+💻 STEP 4: Add the script.js File
+
+Create a script.js file in the same folder and paste this:
+
+document.getElementById('leadForm').onsubmit = function(e) {
+  e.preventDefault();
+
+  // For now, simulate submission
+  alert("Thank you! We’ve received your request. We’ll follow up shortly.");
+
+  // Optional: Add code to POST to email, Slack, webhook, or Replit DB
+};
+
+
+⸻
+
+🖼 STEP 5: Add Logo Image
+
+If your site already has a logo image file (like /logo.png), it will load correctly.
+If not, upload your LIV8 logo into the project root (or update the <img src="..."> path to match wherever your logo is stored in your Replit files).
+
+⸻
+
+🧠 Optional Backend Add-Ons You Can Build Later:
+	•	Connect to a Replit DB to save lead data
+	•	Connect to Zapier, Slack, or Google Sheets via webhook
+	•	Add file upload storage using a Node.js or Python backend + cloud storage (e.g. Supabase or AWS S3)
+	•	Auto-send a confirmation email with the user’s refund estimate
+
+⸻
+
+✅ Done!
+
+Now when someone clicks “R&D Credits” on your funding-and-credits.html, you link them to:
+
+/funding-credits/rnd/index.html
+
+Let me know if you want the next step backend with file handling, Slack alerts, or Google Sheets sync — I can write that out too, Replit-style.

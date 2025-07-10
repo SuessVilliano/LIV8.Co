@@ -51,6 +51,7 @@ export default function Footer() {
               <li><Link href="/join" className="hover:text-white transition-colors">Careers</Link></li>
               <li><Link href="/news" className="hover:text-white transition-colors">News & Updates</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+              <li><a href="https://liv8.pushlapgrowth.com/login" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Affiliate Login</a></li>
             </ul>
           </div>
 
