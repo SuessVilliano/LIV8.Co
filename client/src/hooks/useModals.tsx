@@ -10,46 +10,46 @@ export function useModals() {
   const [exitIntentTriggered, setExitIntentTriggered] = useState(false);
   const [scrollTriggered, setScrollTriggered] = useState(false);
 
-  // Exit intent detection
-  useEffect(() => {
-    const handleExitIntent = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !exitIntentTriggered && !localStorage.getItem('exitIntentDismissed')) {
-        setExitIntentTriggered(true);
-        setTimeout(() => {
-          setExitIntentModal(true);
-        }, 1000);
-      }
-    };
+  // Exit intent detection - DISABLED
+  // useEffect(() => {
+  //   const handleExitIntent = (e: MouseEvent) => {
+  //     if (e.clientY <= 0 && !exitIntentTriggered && !localStorage.getItem('exitIntentDismissed')) {
+  //       setExitIntentTriggered(true);
+  //       setTimeout(() => {
+  //         setExitIntentModal(true);
+  //       }, 1000);
+  //     }
+  //   };
 
-    document.addEventListener('mouseleave', handleExitIntent);
-    return () => document.removeEventListener('mouseleave', handleExitIntent);
-  }, [exitIntentTriggered]);
+  //   document.addEventListener('mouseleave', handleExitIntent);
+  //   return () => document.removeEventListener('mouseleave', handleExitIntent);
+  // }, [exitIntentTriggered]);
 
-  // Timed modal
-  useEffect(() => {
-    if (!localStorage.getItem('timedModalDismissed')) {
-      setTimeout(() => {
-        setTimedModal(true);
-      }, 10000);
-    }
-  }, []);
+  // Timed modal - DISABLED
+  // useEffect(() => {
+  //   if (!localStorage.getItem('timedModalDismissed')) {
+  //     setTimeout(() => {
+  //       setTimedModal(true);
+  //     }, 10000);
+  //   }
+  // }, []);
 
-  // Scroll triggered modal
-  useEffect(() => {
-    const handleScroll = () => {
-      if (scrollTriggered) return;
-      const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      if (scrollPercent >= 75) {
-        setScrollTriggered(true);
-        setTimeout(() => {
-          setNewsletterModal(true);
-        }, 1000);
-      }
-    };
+  // Scroll triggered modal - DISABLED
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (scrollTriggered) return;
+  //     const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  //     if (scrollPercent >= 75) {
+  //       setScrollTriggered(true);
+  //       setTimeout(() => {
+  //         setNewsletterModal(true);
+  //       }, 1000);
+  //     }
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrollTriggered]);
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, [scrollTriggered]);
 
   const closeExitIntentModal = () => {
     setExitIntentModal(false);
