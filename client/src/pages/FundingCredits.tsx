@@ -5,11 +5,10 @@ interface FundingCreditsProps {
 }
 
 export default function FundingCredits({ onBookingClick }: FundingCreditsProps) {
-  const [showFundFindersForm, setShowFundFindersForm] = useState(false);
   const [showScrollWidget, setShowScrollWidget] = useState(false);
 
   const handleOptInClick = () => {
-    setShowFundFindersForm(true);
+    window.open('https://sqr.co/RDRefund', '_blank');
     setShowScrollWidget(false);
   };
 
@@ -22,7 +21,7 @@ export default function FundingCredits({ onBookingClick }: FundingCreditsProps) 
       const documentHeight = document.documentElement.scrollHeight;
       
       // Show widget when user scrolls 50% down the page
-      if (scrollPosition > documentHeight * 0.5 && !showFundFindersForm) {
+      if (scrollPosition > documentHeight * 0.5 && !showScrollWidget) {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
           setShowScrollWidget(true);
@@ -36,7 +35,7 @@ export default function FundingCredits({ onBookingClick }: FundingCreditsProps) 
       window.removeEventListener('scroll', handleScroll);
       clearTimeout(scrollTimeout);
     };
-  }, [showFundFindersForm]);
+  }, [showScrollWidget]);
 
   return (
     <div className="py-20">
@@ -270,18 +269,11 @@ export default function FundingCredits({ onBookingClick }: FundingCreditsProps) 
             </button>
           </div>
           
-          {showFundFindersForm && (
-            <div className="border-t pt-8">
-              <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 text-center">
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Form widget will load here - Make Forms integration
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Widget ID: 6873cb185f135ed8af140fb1
-                </p>
-              </div>
-            </div>
-          )}
+          <div className="text-center mt-6">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Clicking the button above will open the secure eligibility form in a new tab
+            </p>
+          </div>
         </div>
 
         {/* Video Call Section */}
