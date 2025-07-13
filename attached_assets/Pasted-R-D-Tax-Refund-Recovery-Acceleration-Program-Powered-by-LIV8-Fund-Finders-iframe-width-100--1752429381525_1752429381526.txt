@@ -1,0 +1,119 @@
+R&D Tax Refund Recovery & Acceleration Program
+Powered by LIV8 Fund Finders
+
+⸻
+
+
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/UK8piq2lj2I?si=Mvxb-_10mfKyyWbb" title="R&D Refunds Explained" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+⸻
+
+✅ Why This Matters
+
+Each year, over $85 billion in R&D tax credits are left unclaimed by businesses. Whether you’re a startup or scaling company, you may be missing out on thousands in refundable tax credits — and the IRS just opened the door to retroactively claim what’s yours.
+
+With recent changes in tax law, your business may now:
+	•	Claim 100% expensing for R&D costs in 2025
+	•	Retroactively file for cash refunds from 2022–2024
+	•	Offset payroll taxes if you’re not profitable
+
+Even if you’ve never filed or thought you didn’t qualify.
+
+⸻
+
+💡 What Qualifies for R&D Credits?
+
+If your business worked on:
+	•	Software or app development
+	•	AI or automation integration
+	•	Building or improving platforms
+	•	Developing tools, prototypes, formulas, or internal systems
+	•	Paying freelancers or contractors to build tech or optimize workflows
+
+…you likely qualify.
+
+⸻
+
+🔍 What We Do at LIV8 Fund Finders:
+
+We find unclaimed funds for businesses.
+	•	✅ Analyze 2022–2024 tax filings for missed credits
+	•	✅ Identify qualifying expenses for R&D and payroll tax offsets
+	•	✅ File amendments and credit applications
+	•	✅ Build a strategy for 2025 full deduction
+	•	✅ Provide IRS-ready documentation & audit defense
+
+We don’t just file forms. We unlock cash.
+
+⸻
+
+💼 Full-Service Support
+
+Whether you’re already working with a CPA or not, we handle everything from A to Z:
+	•	R&D studies & documentation
+	•	Payroll coordination
+	•	Federal + state level credit optimization
+	•	IRS paperwork and tracking
+	•	Unlimited audit defense & support
+
+⸻
+
+📈 Who Can Benefit?
+	•	🔰 Startups & tech founders
+	•	🧪 Engineers, product builders
+	•	🛠️ Construction firms & fabricators
+	•	📦 Ecommerce businesses
+	•	🌱 AI, automation & software implementers
+
+If your company earns less than $5 million/year and started within the past 5 years, you may be eligible for up to $500,000/year in payroll tax offsets — even without profitability.
+
+⸻
+
+📋 Submit Your Eligibility Info:
+
+Submit Form Here
+
+Or use our quick form widget:
+
+<script src="https://assets.makeforms.io/widgets/us/mfwidget.js"></script>
+
+
+<script>
+new MFWidget('6873cb185f135ed8af140fb1').init();
+</script>
+
+
+
+⸻
+
+📞 Book a Free Estimate Call
+
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/Xs29LBxwqU4?si=_z3T-9w9HAQ6XhgH" title="LIV8 Fund Finders: Unclaimed Business Cash" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+Calendar Title: R&D Tax Refund Estimate Call – LIV8 Fund Finders
+What to Expect:
+	•	Review your last 3 years for unclaimed refunds
+	•	Estimate your 2025 savings
+	•	No pressure — just insight & clarity
+
+You don’t need to prepare anything. Just show up.
+
+⸻
+
+🎯 Final CTA (Short & Bold)
+
+Most businesses don’t know they qualify — and that means they’re leaving cash on the table. Submit your business info and schedule your free call to find out how much money you could recover. No cost. No risk. Just real results.
+
+⸻
+
+Replace “Tax Prep Advocates” with “LIV8 Fund Finders” across all material.
+
+Let me know when you’re ready to add:
+	•	Google Analytics & Facebook Pixel
+	•	Scroll-triggered form popup
+	•	Mobile version of this page
+
+Now go to Repl.it, paste this full HTML/CSS/JS content into your existing index.html, and it will be ready to go live under your /funding-and-credits path.
