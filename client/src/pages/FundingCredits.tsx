@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface FundingCreditsProps {
   onBookingClick: () => void;
@@ -6,10 +6,37 @@ interface FundingCreditsProps {
 
 export default function FundingCredits({ onBookingClick }: FundingCreditsProps) {
   const [showFundFindersForm, setShowFundFindersForm] = useState(false);
+  const [showScrollWidget, setShowScrollWidget] = useState(false);
 
   const handleOptInClick = () => {
     setShowFundFindersForm(true);
+    setShowScrollWidget(false);
   };
+
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Show widget when user scrolls 50% down the page
+      if (scrollPosition > documentHeight * 0.5 && !showFundFindersForm) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          setShowScrollWidget(true);
+        }, 1000);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, [showFundFindersForm]);
 
   return (
     <div className="py-20">
@@ -336,6 +363,50 @@ export default function FundingCredits({ onBookingClick }: FundingCreditsProps) 
           </div>
         </div>
       </div>
+      
+      {/* Scroll-triggered Widget */}
+      {showScrollWidget && (
+        <div className="fixed bottom-4 right-4 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-200 dark:border-gray-700 max-w-sm">
+            <button
+              onClick={() => setShowScrollWidget(false)}
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+            
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-primary to-blue-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-dollar-sign text-white text-xl"></i>
+              </div>
+              
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                Don't Miss Out!
+              </h3>
+              
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                Get your FREE R&D tax refund estimate before you leave
+              </p>
+              
+              <div className="space-y-3">
+                <button
+                  onClick={handleOptInClick}
+                  className="w-full bg-gradient-to-r from-primary to-blue-700 hover:from-blue-700 hover:to-primary text-white px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300"
+                >
+                  Get My Free Assessment
+                </button>
+                
+                <button
+                  onClick={onBookingClick}
+                  className="w-full bg-transparent border border-primary text-primary hover:bg-primary hover:text-white px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300"
+                >
+                  Schedule Free Call
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
