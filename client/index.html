@@ -7,6 +7,13 @@
     <meta name="description" content="Consulting. Funding. Health. Solar. AI. All in One Ecosystem. Transform every aspect of your success with our comprehensive suite of services." />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- PushLap Affiliate Tracking -->
+    <script
+      src="https://pushlapgrowth.com/affiliate-tracker.js"
+      data-affiliate data-program-id="9acd7ded-50dc-4b98-b698-c78edc0481b3"
+      async>
+    </script>
   </head>
   <body>
     <div id="root"></div>
@@ -22,6 +29,46 @@
         js.src = 'https://api.anychat.one/widget/76e7545e-1b03-49da-a970-f19929f1e45c?r=' + encodeURIComponent(window.location);
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'contactus-jssdk'));
+    </script>
+    
+    <!-- PushLap Form Tracking -->
+    <script>
+      (function () {
+        function findEmailAndName(form) {
+          const emailInput = form.querySelector('input[type="email"], input[name*="email" i]');
+          const nameInput = form.querySelector('input[name*="name" i]');
+
+          const email = emailInput ? emailInput.value.trim() : null;
+          const name = nameInput ? nameInput.value.trim() : null;
+
+          return { email, name };
+        }
+
+        function handleFormSubmit(event) {
+          const form = event.target;
+          const { email, name } = findEmailAndName(form);
+
+          if (email && typeof createPushLapEmail === "function") {
+            window.createPushLapEmail(email, name || undefined);
+          }
+        }
+
+        function attachListeners() {
+          const forms = document.querySelectorAll('form');
+
+          forms.forEach((form) => {
+            if (!form.dataset.pushlapBound) {
+              form.addEventListener('submit', handleFormSubmit);
+              form.dataset.pushlapBound = 'true';
+            }
+          });
+        }
+
+        attachListeners();
+
+        const observer = new MutationObserver(() => attachListeners());
+        observer.observe(document.body, { childList: true, subtree: true });
+      })();
     </script>
   </body>
 </html>

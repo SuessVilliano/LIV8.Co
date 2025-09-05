@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { sendEmail, formatContactEmail, formatBookingEmail, formatRDCreditsEmail, formatEventEmail, formatJoinEmail } from "./email";
+import { trackReferral, trackSale, getAffiliateIdFromRequest } from "./affiliate";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
@@ -20,6 +21,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         subject: emailData.subject,
         html: emailData.html,
         text: emailData.text
+      });
+
+      // Track affiliate referral
+      const affiliateId = getAffiliateIdFromRequest(req);
+      await trackReferral({
+        affiliateId,
+        name,
+        email,
+        plan: service || "Contact Inquiry",
+        status: "lead"
       });
 
       if (success) {
@@ -51,6 +62,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         text: emailData.text
       });
 
+      // Track affiliate referral for booking
+      const affiliateId = getAffiliateIdFromRequest(req);
+      await trackReferral({
+        affiliateId,
+        name,
+        email,
+        plan: service || "Booking Request",
+        status: "qualified_lead"
+      });
+
       if (success) {
         res.json({ message: "Booking request submitted successfully" });
       } else {
@@ -78,6 +99,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         subject: emailData.subject,
         html: emailData.html,
         text: emailData.text
+      });
+
+      // Track affiliate referral for R&D credits
+      const affiliateId = getAffiliateIdFromRequest(req);
+      await trackReferral({
+        affiliateId,
+        name,
+        email,
+        plan: `R&D Credits - ${industry}`,
+        status: "high_value_lead",
+        referredUserExternalId: company
       });
 
       if (success) {
@@ -109,6 +141,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         text: emailData.text
       });
 
+      // Track affiliate referral for event request
+      const affiliateId = getAffiliateIdFromRequest(req);
+      await trackReferral({
+        affiliateId,
+        name,
+        email,
+        plan: `Event - ${eventType}`,
+        status: "qualified_lead",
+        referredUserExternalId: company
+      });
+
       if (success) {
         res.json({ message: "Event request submitted successfully" });
       } else {
@@ -138,6 +181,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         text: emailData.text
       });
 
+      // Track affiliate referral for join application
+      const affiliateId = getAffiliateIdFromRequest(req);
+      await trackReferral({
+        affiliateId,
+        name,
+        email,
+        plan: `Join Application - ${interest}`,
+        status: "application"
+      });
+
       if (success) {
         res.json({ message: "Join application submitted successfully" });
       } else {
@@ -146,6 +199,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Join form error:", error);
       res.status(500).json({ error: "Failed to process join application" });
+    }
+  });
+
+  // Affiliate tracking endpoints
+  app.post("/api/affiliate/referral", async (req, res) => {
+    try {
+      const { affiliateId, name, email, plan, status, referredUserExternalId } = req.body;
+      
+      if (!name || !email) {
+        return res.status(400).json({ error: "Name and email are required" });
+      }
+
+      const success = await trackReferral({
+        affiliateId,
+        name,
+        email,
+        plan,
+        status,
+        referredUserExternalId
+      });
+
+      if (success) {
+        res.json({ message: "Referral tracked successfully" });
+      } else {
+        res.status(500).json({ error: "Failed to track referral" });
+      }
+    } catch (error) {
+      console.error("Affiliate referral tracking error:", error);
+      res.status(500).json({ error: "Failed to process referral tracking" });
+    }
+  });
+
+  app.post("/api/affiliate/sale", async (req, res) => {
+    try {
+      const { referralId, externalId, externalInvoiceId, totalEarned, commissionRate } = req.body;
+      
+      if (!referralId || !totalEarned) {
+        return res.status(400).json({ error: "Referral ID and total earned are required" });
+      }
+
+      const success = await trackSale({
+        referralId,
+        externalId,
+        externalInvoiceId,
+        totalEarned,
+        commissionRate
+      });
+
+      if (success) {
+        res.json({ message: "Sale tracked successfully" });
+      } else {
+        res.status(500).json({ error: "Failed to track sale" });
+      }
+    } catch (error) {
+      console.error("Affiliate sale tracking error:", error);
+      res.status(500).json({ error: "Failed to process sale tracking" });
     }
   });
 
