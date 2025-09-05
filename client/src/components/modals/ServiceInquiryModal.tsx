@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import ServiceInquiryForm from '@/components/forms/ServiceInquiryForm';
+import SolarInquiryForm from '@/components/forms/SolarInquiryForm';
+import InsuranceInquiryForm from '@/components/forms/InsuranceInquiryForm';
+import AIInquiryForm from '@/components/forms/AIInquiryForm';
+import HealthInquiryForm from '@/components/forms/HealthInquiryForm';
 
 interface ServiceInquiryModalProps {
   isOpen: boolean;
@@ -40,11 +44,21 @@ export default function ServiceInquiryModal({ isOpen, onClose, service }: Servic
 
         {/* Form */}
         <div className="p-6">
-          <ServiceInquiryForm
-            service={service.id}
-            title={service.title}
-            onClose={onClose}
-          />
+          {service.id === 'solar' ? (
+            <SolarInquiryForm onClose={onClose} />
+          ) : service.id === 'insurance' ? (
+            <InsuranceInquiryForm onClose={onClose} />
+          ) : service.id === 'digital-ai' ? (
+            <AIInquiryForm onClose={onClose} />
+          ) : service.id === 'health' ? (
+            <HealthInquiryForm onClose={onClose} />
+          ) : (
+            <ServiceInquiryForm
+              service={service.id}
+              title={service.title}
+              onClose={onClose}
+            />
+          )}
         </div>
       </div>
     </div>
