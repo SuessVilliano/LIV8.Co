@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { sendEmail, formatContactEmail, formatBookingEmail, formatRDCreditsEmail, formatEventEmail, formatJoinEmail } from "./email";
 import { trackReferral, trackSale, getAffiliateIdFromRequest } from "./affiliate";
+import { sendToWebhook, formatContactWebhook, formatBookingWebhook, formatRDCreditsWebhook, formatJoinWebhook, formatEventWebhook } from "./webhook";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
@@ -32,6 +33,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         plan: service || "Contact Inquiry",
         status: "lead"
       });
+
+      // Send to webhook for automation
+      const webhookData = formatContactWebhook({ name, email, phone, company, service, message }, affiliateId);
+      await sendToWebhook(webhookData);
 
       if (success) {
         res.json({ message: "Contact form submitted successfully" });
@@ -71,6 +76,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         plan: service || "Booking Request",
         status: "qualified_lead"
       });
+
+      // Send to webhook for automation
+      const webhookData = formatBookingWebhook({ name, email, phone, company, service, date, time, message }, affiliateId);
+      await sendToWebhook(webhookData);
 
       if (success) {
         res.json({ message: "Booking request submitted successfully" });
@@ -112,6 +121,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         referredUserExternalId: company
       });
 
+      // Send to webhook for automation
+      const webhookData = formatRDCreditsWebhook({ company, industry, revenue, rd_spend, name, email, phone }, affiliateId);
+      await sendToWebhook(webhookData);
+
       if (success) {
         res.json({ message: "R&D credits request submitted successfully" });
       } else {
@@ -152,6 +165,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         referredUserExternalId: company
       });
 
+      // Send to webhook for automation
+      const webhookData = formatEventWebhook({ eventType, eventDate, eventLocation, guestCount, budget, name, email, phone, company, description }, affiliateId);
+      await sendToWebhook(webhookData);
+
       if (success) {
         res.json({ message: "Event request submitted successfully" });
       } else {
@@ -190,6 +207,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         plan: `Join Application - ${interest}`,
         status: "application"
       });
+
+      // Send to webhook for automation
+      const webhookData = formatJoinWebhook({ name, email, phone, experience, interest, background }, affiliateId);
+      await sendToWebhook(webhookData);
 
       if (success) {
         res.json({ message: "Join application submitted successfully" });
@@ -255,6 +276,133 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Affiliate sale tracking error:", error);
       res.status(500).json({ error: "Failed to process sale tracking" });
+    }
+  });
+
+  // Newsletter signup form
+  app.post("/api/newsletter", async (req, res) => {
+    try {
+      const { email, firstName, interests } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+
+      // Track affiliate referral for newsletter signup
+      const affiliateId = getAffiliateIdFromRequest(req);
+      await trackReferral({
+        affiliateId,
+        name: firstName || "Newsletter Subscriber",
+        email,
+        plan: `Newsletter - ${interests || "General"}`,
+        status: "subscriber"
+      });
+
+      // Send to webhook for automation
+      const webhookData = {
+        form_type: 'newsletter',
+        timestamp: new Date().toISOString(),
+        affiliate_id: affiliateId,
+        name: firstName,
+        email,
+        interests
+      };
+      await sendToWebhook(webhookData);
+
+      // Send confirmation email
+      const emailData = {
+        subject: "New Newsletter Subscription - LIV8",
+        html: `
+          <h2>New Newsletter Subscription</h2>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Name:</strong> ${firstName || 'Not provided'}</p>
+          <p><strong>Interests:</strong> ${interests || 'Not specified'}</p>
+          <p><strong>Affiliate ID:</strong> ${affiliateId || 'Direct'}</p>
+        `,
+        text: `New Newsletter Subscription\nEmail: ${email}\nName: ${firstName || 'Not provided'}\nInterests: ${interests || 'Not specified'}\nAffiliate: ${affiliateId || 'Direct'}`
+      };
+
+      const success = await sendEmail({
+        to: "liv8ent@gmail.com",
+        from: "noreply@liv8.co",
+        subject: emailData.subject,
+        html: emailData.html,
+        text: emailData.text
+      });
+
+      res.json({ message: "Newsletter subscription successful" });
+    } catch (error) {
+      console.error("Newsletter signup error:", error);
+      res.status(500).json({ error: "Failed to process newsletter signup" });
+    }
+  });
+
+  // Service inquiry form
+  app.post("/api/service-inquiry", async (req, res) => {
+    try {
+      const { name, email, phone, company, service, budget, timeline, message } = req.body;
+      
+      if (!name || !email || !phone || !service || !message) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      // Track affiliate referral for service inquiry
+      const affiliateId = getAffiliateIdFromRequest(req);
+      await trackReferral({
+        affiliateId,
+        name,
+        email,
+        plan: `Service Inquiry - ${service}`,
+        status: "high_value_lead",
+        referredUserExternalId: company
+      });
+
+      // Send to webhook for automation
+      const webhookData = {
+        form_type: 'service_inquiry',
+        timestamp: new Date().toISOString(),
+        affiliate_id: affiliateId,
+        name,
+        email,
+        phone,
+        company,
+        service,
+        budget,
+        timeline,
+        message
+      };
+      await sendToWebhook(webhookData);
+
+      // Send notification email
+      const emailData = {
+        subject: `New Service Inquiry - ${service} - LIV8`,
+        html: `
+          <h2>New Service Inquiry</h2>
+          <p><strong>Service:</strong> ${service}</p>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+          <p><strong>Budget:</strong> ${budget || 'Not specified'}</p>
+          <p><strong>Timeline:</strong> ${timeline || 'Not specified'}</p>
+          <p><strong>Message:</strong><br>${message}</p>
+          <p><strong>Affiliate ID:</strong> ${affiliateId || 'Direct'}</p>
+        `,
+        text: `New Service Inquiry\nService: ${service}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nCompany: ${company || 'Not provided'}\nBudget: ${budget || 'Not specified'}\nTimeline: ${timeline || 'Not specified'}\nMessage: ${message}\nAffiliate: ${affiliateId || 'Direct'}`
+      };
+
+      const success = await sendEmail({
+        to: "liv8ent@gmail.com",
+        from: "noreply@liv8.co",
+        subject: emailData.subject,
+        html: emailData.html,
+        text: emailData.text
+      });
+
+      res.json({ message: "Service inquiry submitted successfully" });
+    } catch (error) {
+      console.error("Service inquiry error:", error);
+      res.status(500).json({ error: "Failed to process service inquiry" });
     }
   });
 
