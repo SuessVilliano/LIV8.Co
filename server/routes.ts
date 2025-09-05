@@ -342,7 +342,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { name, email, phone, company, service, budget, timeline, message } = req.body;
       
-      if (!name || !email || !phone || !service || !message) {
+      if (!name || !email || !phone || !service) {
         return res.status(400).json({ error: "Missing required fields" });
       }
 
@@ -403,6 +403,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Service inquiry error:", error);
       res.status(500).json({ error: "Failed to process service inquiry" });
+    }
+  });
+
+  // Track consultation booking events for affiliate program
+  app.post("/api/track-event", async (req, res) => {
+    try {
+      const affiliateId = getAffiliateIdFromRequest(req);
+      
+      // Send to webhook for automation
+      const webhookData = {
+        form_type: 'consultation_booking',
+        timestamp: new Date().toISOString(),
+        affiliate_id: affiliateId,
+        action: req.body.action || 'consultation_booking_click',
+        page: req.body.page || 'book_consultation'
+      };
+      await sendToWebhook(webhookData);
+
+      // Track affiliate referral for consultation booking
+      await trackReferral({
+        affiliateId,
+        name: 'Consultation Booking',
+        email: 'consultation@tracking.com',
+        plan: 'Consultation Booking Click',
+        status: "consultation_interest",
+        referredUserExternalId: 'consultation_tracking'
+      });
+
+      res.json({ message: "Event tracked successfully" });
+    } catch (error) {
+      console.error("Event tracking error:", error);
+      res.status(500).json({ error: "Failed to track event" });
     }
   });
 

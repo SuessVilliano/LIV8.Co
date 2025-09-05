@@ -12,22 +12,28 @@ import Book from "@/pages/Book";
 import Contact from "@/pages/Contact";
 import FundingCredits from "@/pages/FundingCredits";
 import EventsLogistics from "@/pages/EventsLogistics";
+import BookConsultation from "@/pages/BookConsultation";
 import NotFound from "@/pages/not-found";
 import { useModals } from "@/hooks/useModals";
 
 function Router() {
-  const { setBookingModal, setJoinModal } = useModals();
+  const { setJoinModal } = useModals();
+
+  const handleBookingClick = () => {
+    window.location.href = '/book-consultation';
+  };
 
   return (
     <Switch>
-      <Route path="/" component={() => <Home onBookingClick={() => setBookingModal(true)} onJoinClick={() => setJoinModal(true)} />} />
-      <Route path="/services" component={() => <Services onBookingClick={() => setBookingModal(true)} />} />
-      <Route path="/divisions" component={() => <Divisions onBookingClick={() => setBookingModal(true)} />} />
+      <Route path="/" component={() => <Home onBookingClick={handleBookingClick} onJoinClick={() => setJoinModal(true)} />} />
+      <Route path="/services" component={() => <Services onBookingClick={handleBookingClick} />} />
+      <Route path="/divisions" component={() => <Divisions onBookingClick={handleBookingClick} />} />
       <Route path="/join" component={() => <Join onJoinClick={() => setJoinModal(true)} />} />
       <Route path="/book" component={Book} />
       <Route path="/contact" component={Contact} />
-      <Route path="/funding-credits" component={() => <FundingCredits onBookingClick={() => setBookingModal(true)} />} />
-      <Route path="/events-logistics" component={() => <EventsLogistics onBookingClick={() => setBookingModal(true)} />} />
+      <Route path="/book-consultation" component={BookConsultation} />
+      <Route path="/funding-credits" component={() => <FundingCredits onBookingClick={handleBookingClick} />} />
+      <Route path="/events-logistics" component={() => <EventsLogistics onBookingClick={handleBookingClick} />} />
       <Route component={NotFound} />
     </Switch>
   );
